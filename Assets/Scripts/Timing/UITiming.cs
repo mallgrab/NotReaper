@@ -60,6 +60,10 @@ namespace NotReaper.Timing {
             window.alpha = 0;
 
             string ffmpegPath = Path.Combine(Application.streamingAssetsPath, "FFMPEG/ffmpeg.exe");
+
+            if ((Application.platform == RuntimePlatform.LinuxEditor) && (Application.platform == RuntimePlatform.LinuxEditor))
+                ffmpegPath = Path.Combine("/usr/bin/ffmpeg");
+
 			ffmpeg.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
 			ffmpeg.StartInfo.FileName = ffmpegPath;
             ffmpeg.StartInfo.WindowStyle = ProcessWindowStyle.Normal;

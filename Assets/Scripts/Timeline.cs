@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -2105,7 +2105,12 @@ namespace NotReaper {
 
 		bool convertWavToOgg(string wavPath, string oggPath) {
 			System.Diagnostics.Process ffmpeg = new System.Diagnostics.Process();
+
 			string ffmpegPath = Path.Combine(Application.streamingAssetsPath, "FFMPEG", "ffmpeg.exe");
+
+            if ((Application.platform == RuntimePlatform.LinuxEditor) && (Application.platform == RuntimePlatform.LinuxEditor))
+                ffmpegPath = Path.Combine("/usr/bin/ffmpeg");
+
 			ffmpeg.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
 			ffmpeg.StartInfo.FileName = ffmpegPath;
 			ffmpeg.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
