@@ -2108,8 +2108,11 @@ namespace NotReaper {
 
 			string ffmpegPath = Path.Combine(Application.streamingAssetsPath, "FFMPEG", "ffmpeg.exe");
 
-            if ((Application.platform == RuntimePlatform.LinuxEditor) && (Application.platform == RuntimePlatform.LinuxEditor))
+            if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxEditor))
                 ffmpegPath = Path.Combine("/usr/bin/ffmpeg");
+
+			if ((Application.platform == RuntimePlatform.OSXPlayer) ^ (Application.platform == RuntimePlatform.OSXEditor))
+                ffmpegPath = Path.Combine("/usr/local/bin/ffmpeg");
 
 			ffmpeg.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
 			ffmpeg.StartInfo.FileName = ffmpegPath;
@@ -2133,7 +2136,15 @@ namespace NotReaper {
 			System.Diagnostics.Process ogg2mogg = new System.Diagnostics.Process();
 			System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
 			startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+
 			startInfo.FileName = Path.Combine(workFolder, "ogg2mogg.exe");
+
+			if ((Application.platform == RuntimePlatform.LinuxEditor) && (Application.platform == RuntimePlatform.LinuxEditor))
+				startInfo.FileName = Path.Combine(workFolder, "ogg2mogg");
+
+			if ((Application.platform == RuntimePlatform.OSXPlayer) && (Application.platform == RuntimePlatform.OSXEditor))
+                startInfo.FileName = Path.Combine(workFolder, "ogg2moggOSX");
+
 			startInfo.RedirectStandardOutput = true;
 			startInfo.RedirectStandardError = true;
 			
