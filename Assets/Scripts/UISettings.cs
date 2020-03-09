@@ -41,22 +41,46 @@ public class UISettings : MonoBehaviour
 
    public void OpenSettingsFile()
    {
-      Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper", "NRConfig.txt"));
+      string FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper", "NRConfig.txt");
+
+      switch(Application.platform) {
+         case RuntimePlatform.LinuxEditor:
+         case RuntimePlatform.LinuxPlayer:
+            FilePath = Path.Combine("file://" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/CircuitCubed/NotReaper/NRConfig.txt");
+            break;
+         case RuntimePlatform.OSXEditor:
+         case RuntimePlatform.OSXPlayer:
+            FilePath = Path.Combine("open" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/com.circuitcubed.notreaper/NRConfig.txt");
+            break;
+      }
+
+      Process.Start(FilePath);
    }
+
 
    public void OpenSettingsFolder()
    {
-      ProcessStartInfo startInfo = new ProcessStartInfo
-      {
-         Arguments = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper"),
-         FileName = "explorer.exe"
-      };
-      Process.Start(startInfo);
+      string Arguments = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper");
+      string FileName = "explorer.exe";
 
+      switch(Application.platform) {
+         case RuntimePlatform.LinuxEditor:
+         case RuntimePlatform.LinuxPlayer:
+            FileName = Path.Combine("file://" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/CircuitCubed/NotReaper");
+            Arguments = "";
+            break;
+         case RuntimePlatform.OSXEditor:
+         case RuntimePlatform.OSXPlayer:
+            FileName = "open";
+            Arguments = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/com.circuitcubed.notreaper");
+            break;
+      }
+
+      UnityEngine.Debug.Log(FileName + Arguments);
+      Process.Start(FileName, Arguments);
 
       //EditorUtility.RevealInFinder(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper", "NRConfig.txt"));
    }
-
 
    public void ExportAsCues() {
       
