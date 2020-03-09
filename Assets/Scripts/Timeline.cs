@@ -2106,13 +2106,18 @@ namespace NotReaper {
 		bool convertWavToOgg(string wavPath, string oggPath) {
 			System.Diagnostics.Process ffmpeg = new System.Diagnostics.Process();
 
-			string ffmpegPath = Path.Combine(Application.streamingAssetsPath, "FFMPEG", "ffmpeg.exe");
+            string ffmpegPath = Path.Combine(Application.streamingAssetsPath, "FFMPEG", "ffmpeg.exe");
 
-            if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxEditor))
-                ffmpegPath = Path.Combine("/usr/bin/ffmpeg");
-
-			if ((Application.platform == RuntimePlatform.OSXPlayer) ^ (Application.platform == RuntimePlatform.OSXEditor))
-                ffmpegPath = Path.Combine("/usr/local/bin/ffmpeg");
+            switch(Application.platform) {
+                case RuntimePlatform.LinuxEditor:
+                case RuntimePlatform.LinuxPlayer:
+                    ffmpegPath = Path.Combine("/usr/bin/ffmpeg");
+                    break;
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
+                    ffmpegPath = Path.Combine("/usr/local/bin/ffmpeg");
+                    break;
+            }
 
 			ffmpeg.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
 			ffmpeg.StartInfo.FileName = ffmpegPath;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -59,13 +59,18 @@ namespace NotReaper.Timing {
             t.localPosition = new Vector3(0, position.y, position.z);
             window.alpha = 0;
 
-            string ffmpegPath = Path.Combine(Application.streamingAssetsPath, "FFMPEG/ffmpeg.exe");
+            string ffmpegPath = Path.Combine(Application.streamingAssetsPath, "FFMPEG", "ffmpeg.exe");
 
-            if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxEditor))
-                ffmpegPath = Path.Combine("/usr/bin/ffmpeg");
-
-            if ((Application.platform == RuntimePlatform.OSXPlayer) ^ (Application.platform == RuntimePlatform.OSXEditor))
-                ffmpegPath = Path.Combine("/usr/local/bin/ffmpeg");
+            switch(Application.platform) {
+                case RuntimePlatform.LinuxEditor:
+                case RuntimePlatform.LinuxPlayer:
+                    ffmpegPath = Path.Combine("/usr/bin/ffmpeg");
+                    break;
+                case RuntimePlatform.OSXEditor:
+                case RuntimePlatform.OSXPlayer:
+                    ffmpegPath = Path.Combine("/usr/local/bin/ffmpeg");
+                    break;
+            }
 
 			ffmpeg.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
 			ffmpeg.StartInfo.FileName = ffmpegPath;
