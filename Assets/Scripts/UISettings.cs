@@ -50,8 +50,8 @@ public class UISettings : MonoBehaviour
             break;
          case RuntimePlatform.OSXEditor:
          case RuntimePlatform.OSXPlayer:
-            FilePath = Path.Combine("open" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/com.circuitcubed.notreaper/NRConfig.txt");
-            break;
+                FilePath = Path.Combine("open" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + PlayerSettings.companyName + "/" + PlayerSettings.productName + "/NRConfig.txt");
+                break;
       }
 
       Process.Start(FilePath);
@@ -72,8 +72,8 @@ public class UISettings : MonoBehaviour
          case RuntimePlatform.OSXEditor:
          case RuntimePlatform.OSXPlayer:
             FileName = "open";
-            Arguments = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/com.circuitcubed.notreaper");
-            break;
+            Arguments = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + PlayerSettings.companyName + "/" + PlayerSettings.productName + "/");
+                break;
       }
 
       UnityEngine.Debug.Log(FileName + Arguments);

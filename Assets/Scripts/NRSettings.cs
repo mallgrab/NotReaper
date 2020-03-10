@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -90,7 +91,7 @@ namespace NotReaper {
                     break;
                 case RuntimePlatform.OSXEditor:
                 case RuntimePlatform.OSXPlayer:
-                    destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/com.circuitcubed.notreaper");
+                    destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + PlayerSettings.companyName + "/" + PlayerSettings.productName + "/");
                     break;
             }
             
@@ -119,7 +120,7 @@ namespace NotReaper {
                     break;
                 case RuntimePlatform.OSXEditor:
                 case RuntimePlatform.OSXPlayer:
-                    imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/com.circuitcubed.notreaper/BG1.png");
+                    imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + PlayerSettings.companyName + "/" + PlayerSettings.productName + "/BG1.png");
                     break;
             }
 
