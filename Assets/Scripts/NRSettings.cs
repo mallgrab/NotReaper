@@ -91,7 +91,7 @@ namespace NotReaper {
                     break;
                 case RuntimePlatform.OSXEditor:
                 case RuntimePlatform.OSXPlayer:
-                    destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + PlayerSettings.companyName + "/" + PlayerSettings.productName + "/");
+                    destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/");
                     break;
             }
             
@@ -120,7 +120,7 @@ namespace NotReaper {
                     break;
                 case RuntimePlatform.OSXEditor:
                 case RuntimePlatform.OSXPlayer:
-                    imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + PlayerSettings.companyName + "/" + PlayerSettings.productName + "/BG1.png");
+                    imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/BG1.png");
                     break;
             }
 

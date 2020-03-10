@@ -50,7 +50,7 @@ public class UISettings : MonoBehaviour
             break;
          case RuntimePlatform.OSXEditor:
          case RuntimePlatform.OSXPlayer:
-                FilePath = Path.Combine("open" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + PlayerSettings.companyName + "/" + PlayerSettings.productName + "/NRConfig.txt");
+                FilePath = Path.Combine("open" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/NRConfig.txt");
                 break;
       }
 
@@ -72,7 +72,7 @@ public class UISettings : MonoBehaviour
          case RuntimePlatform.OSXEditor:
          case RuntimePlatform.OSXPlayer:
             FileName = "open";
-            Arguments = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + PlayerSettings.companyName + "/" + PlayerSettings.productName + "/");
+            Arguments = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/");
                 break;
       }
 
