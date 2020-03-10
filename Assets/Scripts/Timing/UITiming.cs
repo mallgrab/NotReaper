@@ -61,16 +61,11 @@ namespace NotReaper.Timing {
 
             string ffmpegPath = Path.Combine(Application.streamingAssetsPath, "FFMPEG", "ffmpeg.exe");
 
-            switch(Application.platform) {
-                case RuntimePlatform.LinuxEditor:
-                case RuntimePlatform.LinuxPlayer:
-                    ffmpegPath = Path.Combine("/usr/bin/ffmpeg");
-                    break;
-                case RuntimePlatform.OSXEditor:
-                case RuntimePlatform.OSXPlayer:
-                    ffmpegPath = Path.Combine("/usr/local/bin/ffmpeg");
-                    break;
-            }
+            if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxPlayer))
+                ffmpegPath = Path.Combine("/usr/bin/ffmpeg");
+
+            if ((Application.platform == RuntimePlatform.OSXEditor) ^ (Application.platform == RuntimePlatform.OSXPlayer))
+                ffmpegPath = Path.Combine("/usr/local/bin/ffmpeg");
 
 			ffmpeg.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
 			ffmpeg.StartInfo.FileName = ffmpegPath;
@@ -215,14 +210,10 @@ namespace NotReaper.Timing {
                     UnityEngine.Debug.Log(www.error);
                 } else {
                     audioFile = DownloadHandlerAudioClip.GetContent(www);
-
                     timeline.LoadTimingMode(audioFile);
-
                     ApplyValues();
 
                     yield break;
-
-
                 }
             }
         }

@@ -2108,16 +2108,11 @@ namespace NotReaper {
 
             string ffmpegPath = Path.Combine(Application.streamingAssetsPath, "FFMPEG", "ffmpeg.exe");
 
-            switch(Application.platform) {
-                case RuntimePlatform.LinuxEditor:
-                case RuntimePlatform.LinuxPlayer:
-                    ffmpegPath = Path.Combine("/usr/bin/ffmpeg");
-                    break;
-                case RuntimePlatform.OSXEditor:
-                case RuntimePlatform.OSXPlayer:
-                    ffmpegPath = Path.Combine("/usr/local/bin/ffmpeg");
-                    break;
-            }
+            if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxPlayer))
+                ffmpegPath = Path.Combine("/usr/bin/ffmpeg");
+
+            if ((Application.platform == RuntimePlatform.OSXEditor) ^ (Application.platform == RuntimePlatform.OSXPlayer))
+                ffmpegPath = Path.Combine("/usr/local/bin/ffmpeg");
 
 			ffmpeg.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
 			ffmpeg.StartInfo.FileName = ffmpegPath;
@@ -2144,10 +2139,10 @@ namespace NotReaper {
 
 			startInfo.FileName = Path.Combine(workFolder, "ogg2mogg.exe");
 
-			if ((Application.platform == RuntimePlatform.LinuxEditor) && (Application.platform == RuntimePlatform.LinuxEditor))
+			if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxPlayer))
 				startInfo.FileName = Path.Combine(workFolder, "ogg2mogg");
 
-			if ((Application.platform == RuntimePlatform.OSXPlayer) && (Application.platform == RuntimePlatform.OSXEditor))
+			if ((Application.platform == RuntimePlatform.OSXEditor) ^ (Application.platform == RuntimePlatform.OSXPlayer))
                 startInfo.FileName = Path.Combine(workFolder, "ogg2moggOSX");
 
 			startInfo.RedirectStandardOutput = true;

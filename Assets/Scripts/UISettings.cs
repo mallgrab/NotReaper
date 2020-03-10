@@ -41,44 +41,43 @@ public class UISettings : MonoBehaviour
 
    public void OpenSettingsFile()
    {
-      string FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper", "NRConfig.txt");
+      string FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", Application.companyName, Application.productName, "NRConfig.txt");
+      string AppName = "";
 
-      switch(Application.platform) {
-         case RuntimePlatform.LinuxEditor:
-         case RuntimePlatform.LinuxPlayer:
-            FilePath = Path.Combine("file://" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/CircuitCubed/NotReaper/NRConfig.txt");
-            break;
-         case RuntimePlatform.OSXEditor:
-         case RuntimePlatform.OSXPlayer:
-                FilePath = Path.Combine("open" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/NRConfig.txt");
-                break;
+      if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxPlayer))
+            FilePath = Path.Combine("file://" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/" + Application.companyName + "/" + Application.productName + "/NRConfig.txt");
+
+      if ((Application.platform == RuntimePlatform.OSXEditor) ^ (Application.platform == RuntimePlatform.OSXPlayer)) {
+            AppName = "open";
+            FilePath = Path.Combine(@"""" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/NRConfig.txt" + @"""");
+
+            if (Environment.OSVersion.Version.Major >= 18)
+                FilePath = Path.Combine(@"""" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.identifier + "/NRConfig.txt" + @"""");
       }
 
-      Process.Start(FilePath);
+      Process.Start(AppName, FilePath);
    }
 
 
    public void OpenSettingsFolder()
    {
-      string Arguments = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper");
+      string Arguments = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", Application.companyName, Application.productName);
       string FileName = "explorer.exe";
 
-      switch(Application.platform) {
-         case RuntimePlatform.LinuxEditor:
-         case RuntimePlatform.LinuxPlayer:
-            FileName = Path.Combine("file://" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/CircuitCubed/NotReaper");
-            Arguments = "";
-            break;
-         case RuntimePlatform.OSXEditor:
-         case RuntimePlatform.OSXPlayer:
+      if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxPlayer)) {
+          FileName = Path.Combine("file://" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/" + Application.companyName + "/" + Application.productName);
+          Arguments = "";
+      }
+            
+      if ((Application.platform == RuntimePlatform.OSXEditor) ^ (Application.platform == RuntimePlatform.OSXPlayer)) {
             FileName = "open";
-            Arguments = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/");
-                break;
+            Arguments = Path.Combine(@"""" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/" + @"""");
+
+            if (Environment.OSVersion.Version.Major >= 18)
+                Arguments = Path.Combine(@"""" + Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.identifier + "/" + @"""");
       }
 
-      UnityEngine.Debug.Log(FileName + Arguments);
       Process.Start(FileName, Arguments);
-
       //EditorUtility.RevealInFinder(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper", "NRConfig.txt"));
    }
 

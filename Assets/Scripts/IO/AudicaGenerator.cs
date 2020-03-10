@@ -39,16 +39,11 @@ namespace NotReaper.IO {
 
 			startInfo.FileName = Path.Combine(workFolder, "ogg2mogg.exe");
 
-            switch(Application.platform) {
-                case RuntimePlatform.LinuxEditor:
-                case RuntimePlatform.LinuxPlayer:
-                    startInfo.FileName = Path.Combine(workFolder, "ogg2mogg");
-                    break;
-                case RuntimePlatform.OSXEditor:
-                case RuntimePlatform.OSXPlayer:
-                    startInfo.FileName = Path.Combine(workFolder, "ogg2moggOSX");
-                    break;
-            }
+			if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxPlayer))
+				startInfo.FileName = Path.Combine(workFolder, "ogg2mogg");
+
+			if ((Application.platform == RuntimePlatform.OSXEditor) ^ (Application.platform == RuntimePlatform.OSXPlayer))
+                startInfo.FileName = Path.Combine(workFolder, "ogg2moggOSX");
 			
 			string args = $"\"{oggPath}\" \"{workFolder}/song.mogg\"";
 			startInfo.Arguments = args;

@@ -82,17 +82,16 @@ namespace NotReaper {
             File.WriteAllText(configFilePath, JsonUtility.ToJson(temp, true));
             
 
-            string destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper");
+            string destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", Application.companyName, Application.productName);
 
-            switch(Application.platform) {
-                case RuntimePlatform.LinuxEditor:
-                case RuntimePlatform.LinuxPlayer:
-                    destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/CircuitCubed/NotReaper");
-                    break;
-                case RuntimePlatform.OSXEditor:
-                case RuntimePlatform.OSXPlayer:
-                    destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/");
-                    break;
+            if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxPlayer))
+                destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/" + Application.companyName + "/" + Application.productName);
+
+            if ((Application.platform == RuntimePlatform.OSXEditor) ^ (Application.platform == RuntimePlatform.OSXPlayer)) {
+                destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName);
+
+                if (Environment.OSVersion.Version.Major >= 18)
+                    destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.identifier);
             }
             
             //It's release time and I need a fix ok, don't make fun of my code.
@@ -110,24 +109,20 @@ namespace NotReaper {
         }
 
         public static string GetbgImagePath() {
+            string imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", Application.companyName, Application.productName, "BG1.png");
 
-            string imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper", "BG1.png");
+            if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxPlayer))
+                imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/" + Application.companyName + "/" + Application.productName + "/BG1.png");
 
-            switch(Application.platform) {
-                case RuntimePlatform.LinuxEditor:
-                case RuntimePlatform.LinuxPlayer:
-                    imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/CircuitCubed/NotReaper/BG1.png");
-                    break;
-                case RuntimePlatform.OSXEditor:
-                case RuntimePlatform.OSXPlayer:
-                    imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/BG1.png");
-                    break;
+            if ((Application.platform == RuntimePlatform.OSXEditor) ^ (Application.platform == RuntimePlatform.OSXPlayer)) {
+                imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/BG1.png");
+
+                if (Environment.OSVersion.Version.Major >= 18)
+                    imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.identifier + "/BG1.png");
             }
 
             return(imagePath);
         }
-
-
     }
 
     [System.Serializable]
