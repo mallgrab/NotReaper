@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -20,22 +19,22 @@ namespace NotReaper {
         private static List<Action> pendingActions = new List<Action>();
 
         public static void LoadSettingsJson(bool regenConfig = false) {
+
             //If it doesn't exist, we need to gen a new one.
             if (regenConfig || !File.Exists(configFilePath)) {
                 //Gen new config will autoload the new config.
+
                 if (!failsafeThingy && File.Exists(Path.Combine(Application.persistentDataPath, "NRConfig.json"))) {
                     File.Move(Path.Combine(Application.persistentDataPath, "NRConfig.json"),
                         Path.Combine(Application.persistentDataPath, "NRConfig.txt"));
 
                     failsafeThingy = true;
                     LoadSettingsJson();
+
                     return;
                 }
-
-                GenNewConfig();
                 
-                // Load config on first startup.
-                LoadSettingsJson();
+                GenNewConfig();
                 return;
             }
 
@@ -82,17 +81,7 @@ namespace NotReaper {
             File.WriteAllText(configFilePath, JsonUtility.ToJson(temp, true));
             
 
-            string destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", Application.companyName, Application.productName);
-
-            if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxPlayer))
-                destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/" + Application.companyName + "/" + Application.productName);
-
-            if ((Application.platform == RuntimePlatform.OSXEditor) ^ (Application.platform == RuntimePlatform.OSXPlayer)) {
-                destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName);
-
-                if (Environment.OSVersion.Version.Major >= 18)
-                    destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.identifier);
-            }
+            string destPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper");
             
             //It's release time and I need a fix ok, don't make fun of my code.
             if (File.Exists(Path.Combine(destPath, "BG1.png"))) return;
@@ -108,21 +97,7 @@ namespace NotReaper {
 
         }
 
-        public static string GetbgImagePath() {
-            string imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", Application.companyName, Application.productName, "BG1.png");
 
-            if ((Application.platform == RuntimePlatform.LinuxEditor) ^ (Application.platform == RuntimePlatform.LinuxPlayer))
-                imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.config/unity3d/" + Application.companyName + "/" + Application.productName + "/BG1.png");
-
-            if ((Application.platform == RuntimePlatform.OSXEditor) ^ (Application.platform == RuntimePlatform.OSXPlayer)) {
-                imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.companyName + "/" + Application.productName + "/BG1.png");
-
-                if (Environment.OSVersion.Version.Major >= 18)
-                    imagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Library/Application Support/" + Application.identifier + "/BG1.png");
-            }
-
-            return(imagePath);
-        }
     }
 
     [System.Serializable]
@@ -166,8 +141,7 @@ namespace NotReaper {
 
         public string cuesSavePath = "";
 
-        public string bgImagePath = NRSettings.GetbgImagePath();
-
+        public string bgImagePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "CircuitCubed", "NotReaper", "BG1.png");
     }
 
 }
