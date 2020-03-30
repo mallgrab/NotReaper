@@ -1,23 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering;
 
 public class BGFPS : MonoBehaviour {
-
-    private int rr;
     void OnApplicationFocus(bool hasFocus) {
-        if (hasFocus) {
-            var rate = 0;
-            foreach (var res in Screen.resolutions) {
-                rate = res.refreshRate > rate ? res.refreshRate : rate;
-            }
-
-            rr = rate;
-
-            Application.targetFrameRate = rate;
-        } else if (rr > 60) {
-            Application.targetFrameRate = 144;
+        if (hasFocus)
+        {
+            Application.targetFrameRate = Screen.currentResolution.refreshRate;
+            OnDemandRendering.renderFrameInterval = 1;
         }
-        //Application.targetFrameRate = 144;
+        else
+        {
+            OnDemandRendering.renderFrameInterval = 5;
+        }
     }
-
 }
-
