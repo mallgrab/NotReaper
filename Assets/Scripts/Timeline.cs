@@ -1694,11 +1694,39 @@ namespace NotReaper {
 
 			bool dragging = Input.GetMouseButton(0) && hover;
 
-			if (!isShiftDown && !isScrollingBeatSnap && Math.Abs(Input.mouseScrollDelta.y) > 0.1f) {
+			Relative_QNT jumpDuration = new Relative_QNT((long)Constants.DurationFromBeatSnap((uint)beatSnap).tick);
+			
+			if (Input.GetKeyDown(KeyCode.LeftArrow)) {
 				if (!audioLoaded) return;
 				if (EditorInput.inUI) return;
 
-				Relative_QNT jumpDuration = new Relative_QNT((long)Constants.DurationFromBeatSnap((uint)beatSnap).tick);
+				bool moveTick = false;
+
+				jumpDuration.tick *= -1;
+				time = GetClosestBeatSnapped(time + jumpDuration, (uint)beatSnap);
+
+				SafeSetTime();
+				SetBeatTime(time);
+
+				StopCoroutine(AnimateSetTime(new QNT_Timestamp(0)));
+			} else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+				if (!audioLoaded) return;
+				if (EditorInput.inUI) return;
+
+				bool moveTick = false;
+
+				jumpDuration.tick *= 1;
+				time = GetClosestBeatSnapped(time + jumpDuration, (uint)beatSnap);
+
+				SafeSetTime();
+				SetBeatTime(time);
+
+				StopCoroutine(AnimateSetTime(new QNT_Timestamp(0)));
+			}
+			
+			if (!isShiftDown && !isScrollingBeatSnap && Math.Abs(Input.mouseScrollDelta.y) > 0.1f) {
+				if (!audioLoaded) return;
+				if (EditorInput.inUI) return;
 
 				bool moveTick = false;
 				if(isCtrlDown && !dragging) {
@@ -1719,8 +1747,8 @@ namespace NotReaper {
 
 				SafeSetTime();
 				if (paused) {
-					songPlayback.PlayPreview(time, jumpDuration);
-					checkForNearSustainsOnThisFrame = true;
+					//songPlayback.PlayPreview(time, jumpDuration);
+					checkForNearSustainsOnThisFrame = false;
 				}
 				else {
 					songPlayback.Play(time);
@@ -1731,7 +1759,7 @@ namespace NotReaper {
 				StopCoroutine(AnimateSetTime(new QNT_Timestamp(0)));
 			}
 
-            if (Input.GetKeyDown(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.C)) {
+			if (Input.GetKeyDown(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.C)) {
                 CopyTimestampToClipboard();
             }
 

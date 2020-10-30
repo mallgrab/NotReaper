@@ -28,13 +28,7 @@ namespace NotReaper.Managers {
 
 		private void Start() {
 			I = this;
-
-
-			if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor) {
-				StartCoroutine(Init());
-			}
 			
-
 			downloadSlider.currentPercent = 0;
 			downloadSlider.gameObject.SetActive(false);
 

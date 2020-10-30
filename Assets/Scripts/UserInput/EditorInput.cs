@@ -259,7 +259,7 @@ namespace NotReaper.UserInput {
 					selectedBehavior = TargetBehavior.Standard;
 					soundDropdown.SetValueWithoutNotify((int) UITargetVelocity.Standard);
 					SelectVelocity(UITargetVelocity.Standard);
-					SelectSnappingMode(SnappingMode.Grid);
+					//SelectSnappingMode(SnappingMode.None);
 					
 
 					break;
@@ -268,28 +268,28 @@ namespace NotReaper.UserInput {
 					selectedBehavior = TargetBehavior.Hold;
 					soundDropdown.SetValueWithoutNotify((int) UITargetVelocity.Standard);
 					SelectVelocity(UITargetVelocity.Standard);
-					SelectSnappingMode(SnappingMode.Grid);
+					//SelectSnappingMode(SnappingMode.Grid);
 					break;
 
 				case EditorTool.Horizontal:
 					selectedBehavior = TargetBehavior.Horizontal;
 					soundDropdown.SetValueWithoutNotify((int) UITargetVelocity.Standard);
 					SelectVelocity(UITargetVelocity.Standard);
-					SelectSnappingMode(SnappingMode.Grid);
+					//SelectSnappingMode(SnappingMode.Grid);
 					break;
 
 				case EditorTool.Vertical:
 					selectedBehavior = TargetBehavior.Vertical;
 					soundDropdown.SetValueWithoutNotify((int) UITargetVelocity.Standard);
 					SelectVelocity(UITargetVelocity.Standard);
-					SelectSnappingMode(SnappingMode.Grid);
+					//SelectSnappingMode(SnappingMode.Grid);
 					break;
 
 				case EditorTool.ChainStart:
 					selectedBehavior = TargetBehavior.ChainStart;
 					soundDropdown.SetValueWithoutNotify((int) UITargetVelocity.ChainStart);
 					SelectVelocity(UITargetVelocity.ChainStart);
-					SelectSnappingMode(SnappingMode.Grid);
+					//SelectSnappingMode(SnappingMode.Grid);
 					break;
 
 				case EditorTool.ChainNode:
